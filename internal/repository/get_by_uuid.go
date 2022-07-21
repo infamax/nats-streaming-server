@@ -3,11 +3,9 @@ package repository
 import (
 	"context"
 	"github.com/infamax/nats-streaming-server/internal/models"
-	"log"
 )
 
 func (d *db) GetByUUID(ctx context.Context, uuid string) (*models.Order, error) {
-	log.Println("getting data from table")
 	const query = `select
 		id, order_uid, track_number, entry,
 		locale, internal_signature, customer_id,
@@ -17,42 +15,62 @@ func (d *db) GetByUUID(ctx context.Context, uuid string) (*models.Order, error) 
 		where order_uid = $1;`
 	var order models.Order
 	var id int
-	log.Println("query start")
 	err := d.pool.QueryRow(ctx, query, uuid).Scan(&id,
 		&order.OrderUid, &order.TrackNumber, &order.Entry,
 		&order.Locale, &order.InternalSignature, &order.CustomerId,
 		&order.DeliveryService, &order.Shardkey, &order.SmId,
 		&order.DateCreated, &order.OofShard)
-	log.Println("query finish")
-	log.Println("id = ", id)
-	log.Println("uuid = ", order.OrderUid)
-	log.Println("trackNumber = ", order.TrackNumber)
-	log.Println(err)
 	if err != nil {
 		return nil, err
 	}
 
 	items, err := d.getItems(ctx, order.TrackNumber)
-	log.Println("err = ", err)
 	if err != nil {
 		return nil, err
 	}
 	delivery, err := d.getDelivery(ctx, id)
-	log.Println("id = ", id)
 	if err != nil {
 		return nil, err
 	}
 	payment, err := d.getPayment(ctx, uuid)
 	if err != nil {
-		log.Println("err = ", err)
-		log.Println("error!")
 		return nil, err
 	}
-	log.Println("err = ", err)
 	order.Items = items
 	order.Delivery = *delivery
 	order.Payment = *payment
 	return &order, nil
+}
+
+func (d *db) GetAllModels(ctx context.Context) ([]models.Order, error) {
+	const query = `
+		select order_uid
+		from orders;
+	`
+
+	rows, err := d.pool.Query(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+
+	var orders []models.Order
+	for rows.Next() {
+		var orderUID string
+		err = rows.Scan(&orderUID)
+		if err != nil {
+			return nil, err
+		}
+
+		order, err := d.GetByUUID(ctx, orderUID)
+
+		if err != nil {
+			return nil, err
+		}
+
+		orders = append(orders, *order)
+	}
+
+	return orders, nil
 }
 
 func (d *db) GetByID(ctx context.Context, id int) (string, error) {

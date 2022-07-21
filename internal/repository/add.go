@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"github.com/infamax/nats-streaming-server/internal/models"
-	"log"
 )
 
 func (d *db) AddModel(ctx context.Context, order *models.Order) error {
@@ -18,18 +17,14 @@ func (d *db) AddModel(ctx context.Context, order *models.Order) error {
 	err := d.pool.QueryRow(ctx, query, order.OrderUid, order.TrackNumber, order.Entry,
 		order.Locale, order.InternalSignature, order.CustomerId, order.DeliveryService,
 		order.Shardkey, order.SmId, order.DateCreated, order.OofShard).Scan(&id)
-	log.Println("err = ", err)
 	if err != nil {
 		return err
 	}
 	err = d.addItems(ctx, order.Items)
-	log.Println("err = ", err)
 	if err != nil {
 		return err
 	}
-	log.Println("err = ", err)
 	err = d.addDelivery(ctx, id, &order.Delivery)
-	log.Println("err = ", err)
 	if err != nil {
 		return err
 	}
