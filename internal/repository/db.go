@@ -9,7 +9,7 @@ type db struct {
 	pool *pgxpool.Pool
 }
 
-func New(ctx context.Context, connectionString string) (*db, error) {
+func NewDB(ctx context.Context, connectionString string) (*db, error) {
 	pool, err := pgxpool.Connect(ctx, connectionString)
 	if err != nil {
 		return nil, err

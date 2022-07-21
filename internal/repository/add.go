@@ -40,6 +40,20 @@ func (d *db) AddModel(ctx context.Context, order *models.Order) error {
 	return nil
 }
 
+func (d *db) AddData(ctx context.Context, data string) (int, error) {
+	const query = `insert into 
+			invalid_messages (data)
+			values($1)
+			returning id;
+	`
+	var id int
+	err := d.pool.QueryRow(ctx, query, data).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
 func (d *db) addDelivery(ctx context.Context, id int, delivery *models.Delivery) error {
 	const query = `
 		insert into delivery

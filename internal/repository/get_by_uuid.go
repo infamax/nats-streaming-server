@@ -55,6 +55,20 @@ func (d *db) GetByUUID(ctx context.Context, uuid string) (*models.Order, error) 
 	return &order, nil
 }
 
+func (d *db) GetByID(ctx context.Context, id int) (string, error) {
+	const query = `
+		select data
+		from invalid_messages
+		where id = $1;
+	`
+	var data string
+	err := d.pool.QueryRow(ctx, query, id).Scan(&data)
+	if err != nil {
+		return "", err
+	}
+	return data, nil
+}
+
 func (d *db) getItems(ctx context.Context, trackNumber string) ([]models.Item, error) {
 	const query = `
 		select chrt_id, track_number,
