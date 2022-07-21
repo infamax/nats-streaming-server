@@ -8,10 +8,13 @@ import (
 )
 
 type Service interface {
-	AddModel(order *models.Order) error
-	GetModel(uuid string) (*models.Order, error)
-	UpdateModel(order *models.Order) error
-	DeleteModel(uuid string) error
+	AddModelDB(order *models.Order) error
+	GetModelDB(uuid string) (*models.Order, error)
+	UpdateModelDB(order *models.Order) error
+	DeleteModelDB(uuid string) error
+	GetAllModels() ([]models.Order, error)
+	AddModelCache(order *models.Order) error
+	GetModelCache(uuid string) (*models.Order, error)
 	AddData(data string) (int, error)
 	GetData(id int) (string, error)
 	UpdateData(id int, data string) error

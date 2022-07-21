@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (s *service) UpdateModel(order *models.Order) error {
+func (s *service) UpdateModelDB(order *models.Order) error {
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func (s *service) DeleteModel(uuid string) error {
+func (s *service) DeleteModelDB(uuid string) error {
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
