@@ -1,7 +1,7 @@
 CREATE TABLE orders (
-    id serial PRIMARY KEY,
-    order_uid varchar(40) NOT NULL,
-    track_number varchar(40) NOT NULL,
+    id serial PRIMARY KEY ,
+    order_uid varchar(40)  UNIQUE NOT NULL,
+    track_number varchar(40) UNIQUE NOT NULL ,
     entry text,
     locale text,
     internal_signature text,
@@ -55,7 +55,7 @@ CREATE TABLE payments (
     currency varchar(5),
     provider text,
     amount integer,
-    payment_id integer NOT NULL,
+    payment_dt integer NOT NULL,
     bank text,
     delivery_coast numeric(6, 2),
     goods_total integer,
@@ -68,6 +68,6 @@ CREATE TABLE payments (
 
 CREATE TABLE invalid_messages(
     id serial PRIMARY KEY,
-    data jsonb
+    data text
 );
 
