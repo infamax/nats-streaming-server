@@ -10,5 +10,5 @@ type Payment struct {
 	Bank         string  `json:"bank"`
 	DeliveryCost float64 `json:"delivery_cost"`
 	GoodsTotal   int     `json:"goods_total"`
-	CustomFee    float64 `json:"custom_fee"`
+	CustomFee    int     `json:"custom_fee"`
 }
