@@ -62,7 +62,7 @@
 
 В качестве базы данных был использован Postgres. Схема базы данных выглядит следующим образом
 
-<img src="C:\dev\Golang\L0\схема бд.jpg" alt="Схема бд"/>
+<img src="https://github.com/infamax/nats-streaming-server/blob/main/%D1%81%D1%85%D0%B5%D0%BC%D0%B0%20%D0%B1%D0%B4.jpg" alt="Схема бд"/>
 
 ## АPI
 
@@ -242,10 +242,4 @@ Content-Length: 1152
   "oof_shard": "1"
 }
 ```
-   
-   
 
-    
-
-
- 
