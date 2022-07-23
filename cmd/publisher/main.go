@@ -1,14 +1,10 @@
 package main
 
 import (
+	"github.com/infamax/nats-streaming-server/config"
 	"github.com/nats-io/stan.go"
 	"log"
-)
-
-const (
-	clusterID = "test-cluster"
-	clientID  = "test-client"
-	channel   = "bar"
+	"os"
 )
 
 var json1 = `{
@@ -116,13 +112,23 @@ var json3 = "invalid data"
 var json4 = "test data"
 
 func main() {
-	sc, err := stan.Connect(clusterID, clientID)
+	f, err := os.ReadFile("config/config.yaml")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	cf, err := config.ParseConfig(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sc, err := stan.Connect(cf.PublisherConfig.ClusterID, cf.PublisherConfig.ClientID)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer sc.Close()
-	_ = sc.Publish(channel, []byte(json1))
-	_ = sc.Publish(channel, []byte(json2))
-	_ = sc.Publish(channel, []byte(json3))
-	_ = sc.Publish(channel, []byte(json4))
+	_ = sc.Publish(cf.PublisherConfig.Channel, []byte(json1))
+	_ = sc.Publish(cf.PublisherConfig.Channel, []byte(json2))
+	_ = sc.Publish(cf.PublisherConfig.Channel, []byte(json3))
+	_ = sc.Publish(cf.PublisherConfig.Channel, []byte(json4))
 }

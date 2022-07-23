@@ -59,7 +59,7 @@ func main() {
 	}
 
 	router := handler.InitRoutes()
-	sc, err := stan.Connect(clusterID, clientID)
+	sc, err := stan.Connect(cf.SubscriberConfig.ClusterID, cf.SubscriberConfig.ClientID)
 	defer sc.Close()
 
 	if err != nil {
@@ -72,7 +72,7 @@ func main() {
 		log.Fatal("cannot create nats-streaming")
 	}
 
-	stream.Start(channel, queueGroup)
+	stream.Start(cf.SubscriberConfig.Channel, cf.SubscriberConfig.QueueGroup)
 	go func() {
 		if err := router.Run("localhost:8080"); err != nil {
 			log.Fatal(err)
