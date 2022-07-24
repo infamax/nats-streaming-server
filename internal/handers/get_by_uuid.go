@@ -2,8 +2,11 @@ package handers
 
 import (
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"net/http"
 )
+
+var tmpl = template.Must(template.ParseFiles("template/index.html"))
 
 func (h *Handler) GetByUUID(c *gin.Context) {
 	id := c.Param("id")
@@ -14,7 +17,8 @@ func (h *Handler) GetByUUID(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, order)
+	_ = tmpl.Execute(c.Writer, order)
+	//c.JSON(http.StatusOK, order)
 }
 
 func (h *Handler) GetCache(c *gin.Context) {

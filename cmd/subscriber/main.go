@@ -16,13 +16,6 @@ import (
 	"time"
 )
 
-const (
-	clusterID  = "test-cluster"
-	clientID   = "test-subscriber"
-	channel    = "bar"
-	queueGroup = "order-query-store-group"
-)
-
 func main() {
 
 	time.Sleep(10 * time.Second)

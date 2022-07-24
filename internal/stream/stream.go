@@ -30,6 +30,7 @@ func (s *Stream) Start(subject, durableName string) {
 		err := json.Unmarshal(msg.Data, &order)
 		if err != nil {
 			log.Println("not valid data get service")
+			_, _ = s.service.AddData(string(msg.Data))
 			return
 		}
 		log.Println("add order in cache")

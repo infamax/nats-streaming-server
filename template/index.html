@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<p>Заказ {{.OrderUid}}</p>
+<ul>
+    <li>Track number: {{.TrackNumber}}</li>
+    <li>Entry: {{.Entry}}</li>
+    <li>Locale: {{.Locale}}</li>
+    <li>Internal signature: {{.InternalSignature}}</li>
+    <li>Delivery service {{.DeliveryService}}</li>
+    <li>Customer id: {{.CustomerId}}</li>
+    <li>Shard key: {{.Shardkey}}</li>
+    <li>Sm id: {{.SmId}}</li>
+    <li>Date created: {{.DateCreated}}</li>
+    <li>Oof shard: {{.OofShard}}</li>
+</ul>
+
+<p>Delivery</p>
+<ul>
+    <li>Name: {{.Delivery.Name}}</li>
+    <li>Phone: {{.Delivery.Phone}}</li>
+    <li>Zip: {{.Delivery.Zip}}</li>
+    <li>City: {{.Delivery.City}}</li>
+    <li>Address: {{.Delivery.Address}}</li>
+    <li>Region: {{.Delivery.Region}}</li>
+    <li>Email: {{.Delivery.Email}}</li>
+</ul>
+
+<p>Payment</p>
+<ul>
+    <li>Transaction: {{.Payment.Transaction}}</li>
+    <li>Request id: {{.Payment.RequestID}}</li>
+    <li>Currency: {{.Payment.Currency}}</li>
+    <li>Provider: {{.Payment.Provider}}</li>
+    <li>Amount: {{.Payment.Amount}}</li>
+    <li>Payment dt: {{.Payment.PaymentDt}}</li>
+    <li>Bank: {{.Payment.Bank}}</li>
+    <li>Delivery cost: {{.Payment.DeliveryCost}}</li>
+    <li>Goods total: {{.Payment.GoodsTotal}}</li>
+    <li>Custom fee: {{.Payment.CustomFee}}</li>
+</ul>
+
+<p>Items</p>
+<ul>
+    {{range .Items}}
+    <br>
+    <li>Chrt Id: {{.ChrtId}}</li>
+    <li>Track Number: {{.TrackNumber}}</li>
+    <li>Price: {{.Price}}</li>
+    <li>Rid: {{.Rid}}</li>
+    <li>Name: {{.Name}}</li>
+    <li>Sale: {{.Sale}}</li>
+    <li>Size: {{.Size}}</li>
+    <li>TotalPrice: {{.TotalPrice}}</li>
+    <li>Nm Id: {{.NmId}}</li>
+    <li>Brand: {{.Brand}}</li>
+    <li>Status: {{.Status}}</li>
+    {{end}}
+</ul>
+
+</body>
+</html>
